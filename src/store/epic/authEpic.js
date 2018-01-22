@@ -4,16 +4,16 @@ import { Observable } from 'rxjs'
 import  AuthAction from "../actions/authAction";
 
 import * as firebase from 'firebase';
-var config = {
-    apiKey: "AIzaSyDqPpxlIGjEikoqzvZqB7_-10158KdfxOs",
-    authDomain: "reactreduxtodoappfirebase.firebaseapp.com",
-    databaseURL: "https://reactreduxtodoappfirebase.firebaseio.com",
-    projectId: "reactreduxtodoappfirebase",
-    storageBucket: "",
-    messagingSenderId: "866095779438"
+ // Initialize Firebase
+ var config = {
+    apiKey: "AIzaSyC9IgtllKhi17d8JaEKD7ttojZZOGab_u4",
+    authDomain: "chat-7b31b.firebaseapp.com",
+    databaseURL: "https://chat-7b31b.firebaseio.com",
+    projectId: "chat-7b31b",
+    storageBucket: "chat-7b31b.appspot.com",
+    messagingSenderId: "871567611249"
   };
-firebase.initializeApp(config);
-
+  firebase.initializeApp(config);
 const ref = firebase.database().ref('/');
 const auth = firebase.auth();
 // let userData ;
@@ -27,6 +27,7 @@ class AuthEpic {
                 return Observable.fromPromise(
                     auth.createUserWithEmailAndPassword(payload.email,payload.password)
                     .then((res)=>{
+                        delete payload.password;
                         ref.child(`users/${res.uid}`).set(payload);
                         userCreated = true;
                         // Action Dispatch for reducer to state change , and component render for 

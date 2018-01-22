@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import LoginCard from '../login/login'
 import RegisterCard from '../signup/signup'
 import App from '../app/App';
+import MainApplication from "../MianApplication/MianApplication";
 import {
     BrowserRouter as Router,
     Route,
@@ -31,7 +32,7 @@ class Main extends Component {
                         this.props.isLogin ?
                             <div>
                                 <App />
-                                <h1>Login Successfully</h1>
+                                <MainApplication/>
                             </div>
                             :
                             <div>

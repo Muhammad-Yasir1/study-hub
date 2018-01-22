@@ -20,3 +20,71 @@ firebase.auth().onAuthStateChanged((user) => {
             }
             console.log("is logged in", this.props.isLogged);
         });
+
+static getTodos = (action$)=>{
+       
+        return action$.ofType(ToDoAction.GET_TODO)
+            .switchMap(({ payload })=>{
+                return new Observable((observer)=>{
+                    ref.on('child_added',(s)=>{
+                        observer.next({
+                            type: ToDoAction.GET_ADD_TODO,
+                            payload : {
+                                key : s.key,
+                                val : s.val()
+                            }
+                        })
+                    })
+                    ref.on('child_removed',(s)=>{
+                        console.log(s.val(),s.key)
+                        observer.next({
+                            type : ToDoAction.GET_DELETE_TODO,
+                            payload : s.key
+                        })
+                    })
+                    ref.on('child_changed',(s)=>{
+                        console.log(s.val(),s.key)
+                        observer.next({
+                            type : ToDoAction.GET_COMPLETED_TODO,
+                            payload : {
+                                key : s.key,
+                                val : s.val()
+                            }
+                        })
+                    })
+                    
+                })
+            })
+}
+
+
+
+    demo Epic 
+static getUser = (action$)=>{
+        return action$.ofType()
+        .switchMap(({payload })=>{
+            return Observable.fromPromise(
+               
+            )
+            .map((x)=>{
+                return { type : '' }
+            })
+        })
+    }    
+
+{
+    chat : {
+        asdasdasdasdasd : {
+            msg : '',
+            time : ,
+            sender : uid,
+            receiver : uid
+        }
+        asdasdasdasdasd : {
+            msg : '',
+            time : ,
+            sender : uid,
+            receiver : uid
+        }
+    }
+}

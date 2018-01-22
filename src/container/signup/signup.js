@@ -27,9 +27,6 @@ class RegisterCard extends React.Component {
         super();
         this.state = {
             name: '',
-            age: '',
-            phone: '',
-            address: '',
             email: '',
             password: ''
         }
@@ -45,18 +42,6 @@ class RegisterCard extends React.Component {
                 <TextField
                     hintText="Full Name"
                     onChange={(e) => { this.setState({ name: e.target.value }) }}
-                /><br />
-                <TextField
-                    hintText="Age"
-                    onChange={(e) => { this.setState({ age: e.target.value }) }}
-                /><br />
-                <TextField
-                    hintText="Phone#"
-                    onChange={(e) => { this.setState({ phone: e.target.value }) }}
-                /><br />
-                <TextField
-                    hintText="Address"
-                    onChange={(e) => { this.setState({ address: e.target.value }) }}
                 /><br />
                 <TextField
                 value={this.state.email}
@@ -78,11 +63,9 @@ class RegisterCard extends React.Component {
                         onClick={() => {
                             let user = {
                                 name: this.state.name,
-                                age: this.state.age,
-                                phone: this.state.phone,
-                                address: this.state.address,
                                 email: this.state.email,
-                                password: this.state.password
+                                password: this.state.password,
+                                photoURL : ''
                             }
                             this.props.creataUser(user)
                         }

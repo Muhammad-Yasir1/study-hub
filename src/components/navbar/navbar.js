@@ -23,8 +23,8 @@ class Navbar extends React.Component {
         return (
             <div>
                 <AppBar
-                    onLeftIconButtonClick={this.props.isLogin ? this.handleToggle : () => { alert('Login First') }}
-                    title="User Authentication Boiler Plate"
+                    // onLeftIconButtonClick={this.props.isLogin ? this.handleToggle : () => { alert('Login First') }}
+                    title="Chat And Image Sharing App"
                     // iconClassNameRight="muidocs-icon-navigation-expand-more"
                     iconElementRight={<FlatButton onClick={ this.props.isLogin ? ()=>{
                         firebase.auth().signOut().then(()=>{
@@ -46,18 +46,14 @@ class Navbar extends React.Component {
                             let userData  = {
                                 name : user.displayName,
                                 email : user.email,
-                                phoneNumber :user.phoneNumber,
                                 photoURL : user.photoURL,
-                                address : null,
-                                age : 20
                             }
-
-                             firebase.database().ref('/').child(`users/${user.uid}/`).set(userData).then(()=>{
-                            
-                                 alert('User Login Successfully')
-                             }).catch((e)=>{
-                                alert(e.message)
-                             });
+                            firebase.database().ref('/').child(`users/${user.uid}/`).set(userData).then(()=>{
+                        
+                                alert('User Login Successfully')
+                            }).catch((e)=>{
+                            alert(e.message)
+                            });
                             this.props.loginSuccess();
                         
 
@@ -81,7 +77,7 @@ class Navbar extends React.Component {
                     
                      />}
                 />
-                <Drawer
+                {/* <Drawer
                     docked={false}
                     width={260}
                     open={this.state.open}
@@ -94,7 +90,7 @@ class Navbar extends React.Component {
                     />
                     <MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
                     <MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
-                </Drawer>
+                </Drawer> */}
             </div>
         );
     }
