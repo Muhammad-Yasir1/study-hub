@@ -6,10 +6,27 @@ class CAAction {
     static GET_USERS = 'GET_USERS';
     static ADD_MSG = 'ADD_MSG';
     static ADD_IMAGE = 'ADD_IMAGE';
+
+    static DELETE_MSG = 'DELETE_MSG'
+    static UPDATE_MSG = 'UPDATE_MSG'
     //-------- For Reudcer ---------------------------------
     static GET_USER_ADD = 'GET_USER_ADD';
     static GET_CHAT_DATA_ADD = 'GET_CHAT_DATA_ADD';
+    static GET_MSG_DELETE = 'GET_MSG_DELETE'
+    static GET_MSG_UPDATE = 'GET_MSG_UPDATE'
     //-------- For Epic ---------------------------------
+    static deleteMsg = (data)=>{
+        return {
+            type : CAAction.DELETE_MSG,
+            payload : data
+        }
+    }
+    static updateMsg = (data)=>{
+        return {
+            type : CAAction.UPDATE_MSG,
+            payload : data
+        }
+    }
     static getChatData = ()=>{
         return {
             type : CAAction.GET_CHAT_DATA

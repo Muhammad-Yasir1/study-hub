@@ -14,7 +14,9 @@ const rootEpic = combineEpics(
     CAEpic.addMsg,
     CAEpic.getChatData,
     CAEpic.getUsers,
-    CAEpic.addImg
+    CAEpic.addImg,
+    CAEpic.updateMsg,
+    CAEpic.deleteMSg
 );
 //combine reducers
 const rootReducer = combineReducers({

@@ -7,6 +7,7 @@ let ref = firebase.database().ref('/');
 // let userId  = firebase.auth().currentUser.uid;
 let userRef = ref.child('users');
 // ref.push({nasdnas : 'smdasdas'});
+
 export default class CAEpic {
 
     static getChatData = (action$)=>{
@@ -19,6 +20,22 @@ export default class CAEpic {
                             payload : {
                                 key : s.key,
                                 msgData : s.val()
+                            }
+                        })
+                    })
+                    ref.child(`chatData/`).on('child_removed', (s) => {
+                        observer.next({
+                            type: CAAction.GET_MSG_DELETE,
+                            payload: s.key
+                        })
+                    })
+                    ref.child(`chatData/`).on('child_changed', (s) => {
+                        // console.log(s.val());
+                        observer.next({
+                            type: CAAction.GET_MSG_UPDATE,
+                            payload: {
+                                key: s.key,
+                                msgData: s.val()
                             }
                         })
                     })
@@ -40,6 +57,36 @@ export default class CAEpic {
             })
         })
     }
+    static updateMsg = (action$) => {
+        // alert('asnias')
+        return action$.ofType(CAAction.UPDATE_MSG)
+            .switchMap(({
+                payload
+            }) => {
+                // console.log(payload)
+                return Observable.fromPromise(
+                    ref.child(`chatData/${payload.key}`).set(payload.msg)
+                )
+                    .map((x) => {
+                        return {
+                            type: null
+                        }
+                    })
+            })
+    }
+    static deleteMSg = (action$)=>{
+        return action$.ofType(CAAction.DELETE_MSG)
+        .switchMap(({ payload })=>{
+            // console.log(payload)
+            return Observable.fromPromise(
+                // ref.child(`chatData/`).push(payload)
+                ref.child(`chatData/${payload}/`).set(null)
+            )
+            .map((x)=>{
+                return { type : null }
+            })
+        })
+    }
     static addImg = (action$)=>{
         return action$.ofType(CAAction.ADD_IMAGE)
         .switchMap(({ payload })=>{
@@ -50,7 +97,7 @@ export default class CAEpic {
                     let msg = {
                         type: 'IMG',
                         img: res.downloadURL,
-                        time: time,
+                        time: time.toString(),
                         sender: firebase.auth().currentUser.uid,
                         receiver: payload.receiver
                     }

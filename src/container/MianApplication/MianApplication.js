@@ -17,6 +17,7 @@ class MainApplication extends React.Component {
     this.state = {
       userChat : ''
     }
+   
   }
   componentDidMount(){
     this.props.getChatData();
@@ -76,7 +77,7 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
   return {
     getChatData : ()=>{ dispatch(CAAction.getChatData())},
-    getUsers : ()=>{ dispatch(CAAction.getUser())}
+    getUsers : ()=>{ dispatch(CAAction.getUser())},
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplication)

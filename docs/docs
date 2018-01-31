@@ -1,0 +1,14 @@
+Dear 4.1 & 4.2, 
+Your task is to create chat app on react with redux and firebase with following options:
+1. Chat box will show message and time of msg.
+2. Sender can edit the message within 1 minutes of sending.
+3. Sender can delete the message within 1 minutes of sending.
+4. After 1 minutes message can't be edited or deleted. 
+5. Once the receiver sees the message message will double check to sender as 'seen' like what's app.
+
+Due: coming Friday
+Happy Coding :)
+
+
+msg + ={
+seen : false }

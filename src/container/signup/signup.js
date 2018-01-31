@@ -65,7 +65,7 @@ class RegisterCard extends React.Component {
                                 name: this.state.name,
                                 email: this.state.email,
                                 password: this.state.password,
-                                photoURL : ''
+                                photoURL : 'https://i.pinimg.com/236x/93/d3/e3/93d3e31639a4d07613de9dccdc8bd5e8--developer-icon.jpg'
                             }
                             this.props.creataUser(user)
                         }

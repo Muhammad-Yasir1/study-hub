@@ -26,9 +26,9 @@ class Navbar extends React.Component {
                     // onLeftIconButtonClick={this.props.isLogin ? this.handleToggle : () => { alert('Login First') }}
                     title="Chat And Image Sharing App"
                     // iconClassNameRight="muidocs-icon-navigation-expand-more"
-                    iconElementRight={<FlatButton onClick={ this.props.isLogin ? ()=>{
+                    iconElementRight={<RaisedButton primary={true} style={{ margin : 12 , border : '2px solid blue'}} onClick={ this.props.isLogin ? ()=>{
                         firebase.auth().signOut().then(()=>{
-                            alert('Logout Success Full');
+                            // alert('Logout Success Full');
                             this.props.logout();
                         }).catch(()=>{
                             alert('Error')
@@ -50,7 +50,7 @@ class Navbar extends React.Component {
                             }
                             firebase.database().ref('/').child(`users/${user.uid}/`).set(userData).then(()=>{
                         
-                                alert('User Login Successfully')
+                                // alert('User Login Successfully')
                             }).catch((e)=>{
                             alert(e.message)
                             });
