@@ -16,7 +16,8 @@ const rootEpic = combineEpics(
     CAEpic.getUsers,
     CAEpic.addImg,
     CAEpic.updateMsg,
-    CAEpic.deleteMSg
+    CAEpic.deleteMSg,
+    CAEpic.seen
 );
 //combine reducers
 const rootReducer = combineReducers({

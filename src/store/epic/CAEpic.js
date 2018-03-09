@@ -99,7 +99,8 @@ export default class CAEpic {
                         img: res.downloadURL,
                         time: time.toString(),
                         sender: firebase.auth().currentUser.uid,
-                        receiver: payload.receiver
+                        receiver: payload.receiver,
+                        seen : false
                     }
                     // console.log(msg);
                     // this.props.addImg(this.state.img);
@@ -131,6 +132,23 @@ export default class CAEpic {
                     
 
                 }).takeUntil(action$.ofType('LOGOUT'));
+            })
+    }
+    static seen = (action$) => {
+        // alert('asnias')
+        return action$.ofType("SEEN")
+            .switchMap(({
+                payload
+            }) => {
+                // console.log(payload)
+                return Observable.fromPromise(
+                    ref.child(`chatData/${payload}/seen`).set(true)
+                )
+                    .map((x) => {
+                        return {
+                            type: null
+                        }
+                    })
             })
     }
 

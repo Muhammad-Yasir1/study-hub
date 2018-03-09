@@ -9,7 +9,7 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import FlatButton from 'material-ui/FlatButton';
 
 const style = {
-    margin: 12,
+    margin: 12, 
 };
 
 const msg = {
@@ -78,8 +78,6 @@ class ChatBox extends Component {
 
                     {/* </Card> */}
                     {/* To Chat This Person Adove */}
-
-
                     {this.props.userChat !== null ? this.props.chatData !== undefined ?
                         Object.keys(this.props.chatData).map((chatKey, i) => {
 
@@ -87,6 +85,9 @@ class ChatBox extends Component {
                             if ((oneMsg.receiver === this.props.userChat && oneMsg.sender === firebase.auth().currentUser.uid) ||
                                 (oneMsg.sender === this.props.userChat && oneMsg.receiver === firebase.auth().currentUser.uid)) {
                                 let demo = new Date(oneMsg.time)
+                                if(oneMsg.receiver === firebase.auth().currentUser.uid){
+                                    this.props.seen(chatKey);
+                                }
                                 if (oneMsg.type === 'IMG') {
                                     setTimeout(() => {
                                         this.refs.chatBox !== undefined ? this.refs.chatBox.scrollBy(0, 800) : null;
@@ -99,7 +100,7 @@ class ChatBox extends Component {
                                     setTimeout(() => {
                                         this.refs.chatBox !== undefined ? this.refs.chatBox.scrollBy(0, 300) : null;
                                     }, 100);
-                                    return (<TextMsg currentDate={this.props.currentDate}
+                                    return (<TextMsg updateMsg= {this.props.updateMsg} currentDate={this.props.currentDate}
                                         key={chatKey} deleteMsg={this.props.deleteMsg} userChat={this.state.userChat}
                                         chatKey={chatKey} demo={demo} oneMsg={oneMsg} />)
 
@@ -130,6 +131,7 @@ class ChatBox extends Component {
                                 time: time.toString(),
                                 sender: firebase.auth().currentUser.uid,
                                 receiver: this.props.userChat,
+                                seen : false
                                 // time : 
                             }
                             // console.log(msg);
@@ -174,7 +176,9 @@ let mapDispatchToProps = (dispatch) => {
         addImg: (data) => { dispatch(CAAction.addImg(data)) },
         updateMsg: (data) => { dispatch(CAAction.updateMsg(data)) },
         deleteMsg: (data) => { dispatch(CAAction.deleteMsg(data)) },
-        updateDate: () => { dispatch({ type: 'UPDATE_DATE' }) }
+        seen : (key)=>{dispatch({type : 'SEEN' , payload : key})},
+        updateDate: () => { dispatch({ type: 'UPDATE_DATE' }) },
+
 
     }
 }
@@ -205,7 +209,7 @@ class TextMsg extends Component {
 
             <p key={this.props.chatKey}
                 style={this.props.oneMsg.sender === firebase.auth().currentUser.uid ? { textAlign: 'right' } : { textAlign: 'left' }}>
-                {minutes < 1 ? <span>
+                {minutes < 1 &&  this.props.oneMsg.sender=== firebase.auth().currentUser.uid ?<span>
                     <FlatButton label={this.state.isEdit ? 'Update' : 'Edit'} onClick={() => {
                         if (this.state.isEdit) {
                             let updateMsg = {
@@ -230,7 +234,7 @@ class TextMsg extends Component {
                     <FlatButton label="Delete" onClick={() => {
                         this.props.deleteMsg(this.props.chatKey)
                     }} secondary={true} />
-                </span> : null}{`${this.props.demo.getHours()} : ${this.props.demo.getMinutes()} : ${this.props.demo.getSeconds()}`}
+                </span> : null}{` ${this.props.demo.getHours()} : ${this.props.demo.getMinutes()} : ${this.props.demo.getSeconds()}  ${this.props.oneMsg.seen && this.props.oneMsg.sender === firebase.auth().currentUser.uid ? `- seen - ` : ''}`}
                 {this.state.isEdit ? <span style={msg}>
                     <TextField
                         value={this.state.editMsg}
